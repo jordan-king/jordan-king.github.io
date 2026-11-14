@@ -125,10 +125,21 @@ footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule)
   .charts, .facts, .bausteine { display: block; }
   .charts > .panel + .panel, .facts > .panel + .panel, .bausteine > .panel + .panel { margin-top: 14px; }
 }
+/* Language switch: both languages are in the page; html[lang] picks the visible one. */
+.bar { display: flex; justify-content: flex-end; margin-bottom: -8px; }
+.lang { display: inline-flex; border: 1px solid var(--ink); border-radius: 999px; overflow: hidden; }
+.lang button { font: 600 12px/1 var(--f-body); letter-spacing: .08em; text-transform: uppercase; padding: 9px 14px; margin: 0;
+  border: 0; border-radius: 999px; background: transparent; color: var(--ink); cursor: pointer; }
+.lang button[aria-pressed="true"] { background: var(--ink); color: var(--bg); cursor: default; }
+.lang button:focus-visible { outline: 2px solid var(--neg); outline-offset: -4px; }
+html[lang="en"] .wrap[lang="de"], html:not([lang="en"]) .wrap[lang="en"] { display: none; }
+@media print { .bar { display: none; } }
 </style>
+<script>try{var l=location.hash.slice(1)||localStorage.getItem("jk-lang");if(l==="en"||l==="de")document.documentElement.lang=l}catch(e){}</script>
 </head>
 <body>
-<div class="wrap">
+<div class="wrap" lang="de">
+  <nav class="bar" aria-label="Sprache"><div class="lang"><button type="button" lang="de" data-lang="de" aria-pressed="true">Deutsch</button><button type="button" lang="en" data-lang="en" aria-pressed="false">English</button></div></nav>
   <header>
     <div>
       <div class="eyebrow">Quo Vadis-Workshop · Teil 1 · Kassensturz</div>
@@ -150,7 +161,7 @@ footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule)
         <p class="sub">Überschuss im laufenden Betrieb gegen Projektdefizit, je Konzertjahr</p>
       </div>
       <div class="legend"><span><i style="background:var(--acap)"></i>Laufender Betrieb</span><span><i style="background:var(--neg)"></i>Projekte</span><span><i style="background:var(--pos)"></i>Gesamtergebnis</span></div>
-      <div class="chart"><svg id="season" role="img" aria-label="Säulendiagramm Laufender Betrieb, Projekte und Gesamtergebnis 2023 bis 2026"></svg></div>
+      <div class="chart"><svg id="season-de" role="img" aria-label="Säulendiagramm Laufender Betrieb, Projekte und Gesamtergebnis 2023 bis 2026"></svg></div>
       <p class="note">Saldo in €. 2026 mit Annahme: Die Basisförderung (38.500 €) wird bis Dezember voll ausgezahlt und ausgegeben.</p>
     </div>
     <div class="panel">
@@ -159,7 +170,7 @@ footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule)
         <p class="sub">Netto je Projekt nach Tickets, Förderung und Reisebeiträgen, in €</p>
       </div>
       <div class="legend"><span><i style="background:var(--neg)"></i>Pflichtkonzert, ungefördert</span><span><i style="background:var(--pos)"></i>Pflichtkonzert, gefördert oder Orchester gestellt</span><span><i style="background:var(--acap)"></i>freiwillig (Gerontius, a cappella)</span></div>
-      <div class="chart"><svg id="projects" role="img" aria-label="Balkendiagramm Projektergebnisse, getrennt nach Pflichtkonzerten und freiwilligen Projekten"></svg></div>
+      <div class="chart"><svg id="projects-de" role="img" aria-label="Balkendiagramm Projektergebnisse, getrennt nach Pflichtkonzerten und freiwilligen Projekten"></svg></div>
       <p class="note">Die Förderbedingungen der Basisförderung verlangen Pflichtkonzerte: chorsinfonisch mit Profiorchester. Deshalb machen wir die teuren Projekte. Gerontius (ohne Profiorchester) und die A-cappella-Projekte zählen nicht dazu.</p>
     </div>
   </section>
@@ -233,9 +244,123 @@ footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule)
   </footer>
 </div>
 
+<div class="wrap" lang="en">
+  <nav class="bar" aria-label="Language"><div class="lang"><button type="button" lang="de" data-lang="de" aria-pressed="false">Deutsch</button><button type="button" lang="en" data-lang="en" aria-pressed="true">English</button></div></nav>
+  <header>
+    <div>
+      <div class="eyebrow">Quo Vadis workshop · Part 1 · Taking stock</div>
+      <h1>What does a season with three projects cost?</h1>
+    </div>
+    <p>Choir account (10) and Senate account (44), concerts from January 2023 to October 2026. Excluding rehearsal weekends, choir competitions and the Covid years.</p>
+  </header>
+
+  <section class="keys" aria-label="Key figures">
+    <div class="key"><b class="num">−€8,183</b><span>Average annual result 2023–2025</span><small>2026 positive for the first time at +€8,904 (Britten with the orchestra provided, Tristia with HKF funding)</small></div>
+    <div class="key"><b class="num">−€21,931</b><span>Average deficit of an unfunded mandatory concert</span><small>Range −€16,191 to −€27,400 · Paulus, FuF, Mozart, JP, Opera Edition</small></div>
+    <div class="key"><b class="num">€82</b><span>per singer and unfunded mandatory concert to cover the annual deficit</span><small>2023–2025: −€24,549 ÷ (5 unfunded mandatory concerts × 60 singers), no contribution for funded and voluntary projects · alternatively +€65 membership fee per year (≈ €5.40/month with an average of 126 paying members)</small></div>
+  </section>
+
+  <section class="charts">
+    <div class="panel">
+      <div>
+        <h2>Rehearsals pay for themselves, the projects don’t</h2>
+        <p class="sub">Surplus from day-to-day operations against the project deficit, per concert year</p>
+      </div>
+      <div class="legend"><span><i style="background:var(--acap)"></i>Day-to-day operations</span><span><i style="background:var(--neg)"></i>Projects</span><span><i style="background:var(--pos)"></i>Overall result</span></div>
+      <div class="chart"><svg id="season-en" role="img" aria-label="Column chart of day-to-day operations, projects and overall result, 2023 to 2026"></svg></div>
+      <p class="note">Net balance in €. 2026 assumes the base funding (€38,500) is paid out and spent in full by December.</p>
+    </div>
+    <div class="panel">
+      <div>
+        <h2>The mandatory concerts cost money, the voluntary projects pay for themselves</h2>
+        <p class="sub">Net per project after tickets, funding and travel contributions, in €</p>
+      </div>
+      <div class="legend"><span><i style="background:var(--neg)"></i>Mandatory concert, unfunded</span><span><i style="background:var(--pos)"></i>Mandatory concert, funded or orchestra provided</span><span><i style="background:var(--acap)"></i>voluntary (Gerontius, a cappella)</span></div>
+      <div class="chart"><svg id="projects-en" role="img" aria-label="Bar chart of project results, split into mandatory concerts and voluntary projects"></svg></div>
+      <p class="note">The conditions of the base funding require mandatory concerts: choral-symphonic works with a professional orchestra. That is why we do the expensive projects. Gerontius (without a professional orchestra) and the a cappella projects don’t count.</p>
+    </div>
+  </section>
+
+  <section class="facts">
+    <div class="panel">
+      <div>
+        <h2>What day-to-day operations leave for the concerts</h2>
+        <p class="sub">Income for the year minus rehearsal and association costs, in €</p>
+      </div>
+      <div class="tw"><table>
+        <tr><th></th><th>2023</th><th>2024</th><th>2025</th><th>2026</th></tr>
+        <tr><td>Membership fees</td><td>17,695</td><td>21,192</td><td>23,691</td><td>21,317</td></tr>
+        <tr><td>Senate base funding</td><td>31,379</td><td>38,500</td><td>37,637</td><td>38,500</td></tr>
+        <tr><td>Donations</td><td>4,129</td><td>2,652</td><td>1,911</td><td>3,671</td></tr>
+        <tr><td>Paid performances</td><td>438</td><td>8,270</td><td>11,240</td><td>820</td></tr>
+        <tr><td>Rehearsals</td><td>−30,672</td><td>−35,826</td><td>−34,784</td><td>−35,935</td></tr>
+        <tr><td>Association, rehearsal weekends</td><td>−6,572</td><td>−3,760</td><td>−6,997</td><td>−509</td></tr>
+        <tr class="strong total"><td>Left for concerts</td><td>16,397</td><td>31,027</td><td>32,697</td><td>27,864</td></tr>
+      </table></div>
+      <p class="note">This surplus pays for the projects. Whatever it doesn’t cover is the annual deficit. Paid performances vary a lot: in 2024/25 they brought in €8–11k, in 2023 and 2026 almost nothing.</p>
+    </div>
+    <div class="panel">
+      <h2>What membership fees cover</h2>
+      <div class="tw"><table>
+        <tr><th></th><th>2023</th><th>2024</th><th>2025</th><th>2026</th></tr>
+        <tr><td>Paying members</td><td>120</td><td>127</td><td>132</td><td>115</td></tr>
+        <tr><td>€ per person/year</td><td>147</td><td>167</td><td>179</td><td>185</td></tr>
+        <tr><td>Project deficit</td><td>24,817</td><td>39,562</td><td>40,290</td><td>18,960</td></tr>
+        <tr class="strong"><td>Fees cover</td><td>71%</td><td>54%</td><td>59%</td><td>112%</td></tr>
+      </table></div>
+      <p class="note">On average, members pay €12–15 a month. Berlin concert choirs charge €20–30 (reduced €14–20). Tiers in 2026 (115 paying members): 32 Low · 38 Standard · 18 High · 27 still pay the old standard fee of €45 per quarter.</p>
+    </div>
+    <div class="panel">
+      <h2>What a voluntary project contribution brings in</h2>
+      <div class="tw"><table>
+        <tr><th>per person and project</th><th>€ per year</th><th>of the annual deficit</th></tr>
+        <tr><td>€20</td><td>2,046</td><td>25%</td></tr>
+        <tr><td>€25</td><td>2,500</td><td>31%</td></tr>
+        <tr><td>€40</td><td>4,000</td><td>49%</td></tr>
+        <tr><td>€41</td><td>4,092</td><td>50%</td></tr>
+        <tr class="strong"><td>€82</td><td>8,183</td><td>100%</td></tr>
+      </table></div>
+      <p class="note">Calculated against the annual deficit (average 2023–2025), not against a single project: with ≈ 1.7 unfunded mandatory concerts per year and all 60 singers. If only some take part, the total falls accordingly.</p>
+    </div>
+  </section>
+
+  <section class="panel anhang" aria-labelledby="anhang-h-en">
+    <div>
+      <div class="eyebrow">Appendix</div>
+      <h2 id="anhang-h-en">Membership fees of other Berlin choirs</h2>
+      <p class="sub">According to the choirs’ websites, as of November 2026. Amounts per month.</p>
+    </div>
+    <div class="tw"><table>
+      <tr><th>Choir</th><th>Type</th><th>Fee standard / reduced</th><th>Project guests</th><th>Source</th></tr>
+      <tr class="jeb"><td>JEB Chor</td><td data-label="Type">choral-symphonic, Senate-funded</td><td data-label="Fee" class="n">€10 / €18.33 / €25<br>actual average ≈ €15</td><td data-label="Project guests">no fee yet</td><td data-label="Source" class="src">Fee regulations, bookings 2026</td></tr>
+      <tr><td>Berliner Konzert Chor</td><td data-label="Type">oratorio choir, large halls</td><td data-label="Fee" class="n">€30 / €20</td><td data-label="Project guests" class="n">€50 per concert</td><td data-label="Source" class="src">konzertchor.berlin</td></tr>
+      <tr><td>Belcanto-Chor Berlin</td><td data-label="Type">concert choir</td><td data-label="Fee" class="n">€25 / €15</td><td data-label="Project guests">–</td><td data-label="Source" class="src">belcantochor.de</td></tr>
+      <tr><td>Junger Kammerchor Berlin</td><td data-label="Type">chamber choir</td><td data-label="Fee" class="n">€20 / €14</td><td data-label="Project guests">–</td><td data-label="Source" class="src">jungerkammerchorberlin.de</td></tr>
+      <tr><td>Chorus Berlin</td><td data-label="Type">amateur choir, pop/classical</td><td data-label="Fee" class="n">€20 (reduced rate possible)</td><td data-label="Project guests">–</td><td data-label="Source" class="src">chorus-berlin.de</td></tr>
+      <tr><td>Karl-Forster-Chor</td><td data-label="Type">concert choir</td><td data-label="Fee">not published</td><td data-label="Project guests" class="n">from €50 per project</td><td data-label="Source" class="src">karl-forster-chor.de</td></tr>
+      <tr><td>Projektchor Berlin</td><td data-label="Type">project-only choir</td><td data-label="Fee">no membership</td><td data-label="Project guests" class="n">approx. €80 per project</td><td data-label="Source" class="src">projektchor-berlin.de</td></tr>
+      <tr><td>Berliner Kantorei</td><td data-label="Type">church and oratorio choir</td><td data-label="Fee" class="n">donation from ≈ €6 (€70/year)<br>reduced from ≈ €3 (€40/year)</td><td data-label="Project guests">–</td><td data-label="Source" class="src">kantorei.de</td></tr>
+      <tr><td>Berliner Domkantorei</td><td data-label="Type">church choir</td><td data-label="Fee">no fee (supporters’ circle)</td><td data-label="Project guests">–</td><td data-label="Source" class="src">berlinerdom.de</td></tr>
+    </table></div>
+    <p class="note">Secular concert choirs in Berlin mostly charge €20–30 a month, reduced €14–20. At €10 / €18.33 / €25 the JEB is below that; on average, members pay ≈ €15. Church choirs are cheaper because their parish supports them. At other choirs, project guests pay €50–80 per project.</p>
+  </section>
+
+  <footer>
+    <span>Gross project costs per season: €107,189 · €80,490 · €75,851 · €59,417. As of 13 November 2026.</span>
+  </footer>
+</div>
+
 <script>
 const NS = "http://www.w3.org/2000/svg";
-const fmt = v => (v < 0 ? "−" : v > 0 ? "+" : "") + Math.abs(Math.round(v)).toLocaleString("de-DE");
+const L10N = {
+  de: { loc: "de-DE", title: "Kassensturz Chor 2023–2026", k: " T", net: "Saldo",
+        series: ["Laufender Betrieb", "Projekte", "Gesamtergebnis"], avg: "Ø ungefördertes Pflichtkonzert −21.931" },
+  en: { loc: "en-GB", title: "Choir Finances 2023–2026", k: "k", net: "Net",
+        series: ["Day-to-day operations", "Projects", "Overall result"], avg: "Avg. unfunded mandatory concert −21,931" },
+};
+let lang = document.documentElement.lang === "en" ? "en" : "de";
+const fmt = v => (v < 0 ? "−" : v > 0 ? "+" : "") + Math.abs(Math.round(v)).toLocaleString(L10N[lang].loc);
+const eur = v => lang === "en" ? fmt(v).replace(/^([−+]?)/, "$1€") : fmt(v) + " €";
 function el(tag, attrs, parent, text) {
   const e = document.createElementNS(NS, tag);
   for (const k in attrs) e.setAttribute(k, attrs[k]);
@@ -261,23 +386,24 @@ function wrap(parent, x, y, str, maxW, cls, lh) {
 
 /* Season chart: drawn at the real pixel width, so text stays at its CSS size on any screen. */
 function drawSeason() {
-  const svg = document.getElementById("season"); clear(svg);
+  const svg = document.getElementById("season-" + lang); clear(svg);
   const W = Math.round(svg.parentNode.clientWidth); if (!W) return;
+  const S = L10N[lang];
   const data = [["2023", 16397, -24817, -8420], ["2024", 31027, -39562, -8535], ["2025", 32697, -40290, -7594], ["2026", 27864, -18960, 8904]];
   const L = 44, R = W - 2, T = 8, B = W < 480 ? 220 : 256, lo = -45000, hi = 40000;
   const y = v => T + (hi - v) / (hi - lo) * (B - T);
   for (let t = -40000; t <= 40000; t += 20000) {
     el("line", { x1: L, x2: R, y1: y(t), y2: y(t), class: t === 0 ? "zero" : "grid" }, svg);
-    el("text", { x: L - 6, y: y(t) + 4, "text-anchor": "end" }, svg, t === 0 ? "0" : fmt(t / 1000) + " T");
+    el("text", { x: L - 6, y: y(t) + 4, "text-anchor": "end" }, svg, t === 0 ? "0" : fmt(t / 1000) + S.k);
   }
   const band = (R - L) / data.length, gap = 3, bw = Math.min(24, (band - 2 * gap - 12) / 3);
-  el("text", { x: L - 6, y: B + 40, "text-anchor": "end" }, svg, "Saldo");
+  el("text", { x: L - 6, y: B + 40, "text-anchor": "end" }, svg, S.net);
   data.forEach(([yr, run, proj, res], i) => {
     const cx = L + band * i + band / 2;
     const xs = [cx - 1.5 * bw - gap, cx - bw / 2, cx + bw / 2 + gap];
-    [[run, "var(--acap)", "Laufender Betrieb"], [proj, "var(--neg)", "Projekte"], [res, "var(--pos)", "Gesamtergebnis"]].forEach(([v, fill, lab], j) => {
+    [[run, "var(--acap)"], [proj, "var(--neg)"], [res, "var(--pos)"]].forEach(([v, fill], j) => {
       const r = el("rect", { x: xs[j], y: Math.min(y(v), y(0)), width: bw, height: Math.abs(y(v) - y(0)), rx: 2, fill }, svg);
-      tip(r, `${yr} ${lab}: ${fmt(v)} €`);
+      tip(r, `${yr} ${S.series[j]}: ${eur(v)}`);
     });
     el("text", { x: cx, y: B + 20, "text-anchor": "middle", class: "yr" }, svg, yr);
     el("text", { x: cx, y: B + 40, "text-anchor": "middle", class: "res" }, svg, fmt(res));
@@ -288,24 +414,28 @@ function drawSeason() {
 
 /* Project chart: on narrow screens the name sits above its bar; on wider ones in a label column. */
 function drawProjects() {
-  const svg = document.getElementById("projects"); clear(svg);
+  const svg = document.getElementById("projects-" + lang); clear(svg);
   const W = Math.round(svg.parentNode.clientWidth); if (!W) return;
+  const S = L10N[lang], en = lang === "en";
   const narrow = W < 460;
   const N = "var(--neg)", P = "var(--pos)", A = "var(--acap)";
+  // group rows: ["g", [de heading, de note], [en heading, en note]]; project rows: [name, date, net, colour, de kind, en kind]
   const data = [
-    ["g", "Pflichtkonzerte", "chorsinfonisch mit Profiorchester · zusammen −129.780"],
-    ["Paulus", "07/23", -27400, N, "ungefördert"],
-    ["La Foi / Glaubensfragen", "11/23", -1167, P, "Senat-Projektförderung 26.750 €"],
-    ["Fluten und Flammen", "06/24", -24697, N, "ungefördert"],
-    ["Vollendet Mozart", "11/24", -16191, N, "ungefördert"],
-    ["Johannes-Passion", "03/25", -22210, N, "ungefördert (CVB 3.077 €)"],
-    ["Opera Edition", "11/25", -19155, N, "ungefördert"],
-    ["Britten in Peace", "02/26", -14457, P, "Orchester vom Konzerthaus gestellt"],
-    ["Tristia / Ode", "10/26", -4502, P, "HKF-Förderung 23.000 €"],
-    ["g", "Freiwillig", "kein Pflichtkonzert · zusammen +6.151"],
-    ["Gerontius", "01/23", 3750, A, "chorsinfonisch ohne Profiorchester, sehr hohe Ticketeinnahmen"],
-    ["Sieben Worte Tour", "03/24", 1326, A, "a cappella"],
-    ["Mare Balticum", "07/25", 1075, A, "a cappella"],
+    ["g", ["Pflichtkonzerte", "chorsinfonisch mit Profiorchester · zusammen −129.780"],
+          ["Mandatory concerts", "choral-symphonic with professional orchestra · total −129,780"]],
+    ["Paulus", "07/23", -27400, N, "ungefördert", "unfunded"],
+    ["La Foi / Glaubensfragen", "11/23", -1167, P, "Senat-Projektförderung 26.750 €", "Senate project funding €26,750"],
+    ["Fluten und Flammen", "06/24", -24697, N, "ungefördert", "unfunded"],
+    ["Vollendet Mozart", "11/24", -16191, N, "ungefördert", "unfunded"],
+    ["Johannes-Passion", "03/25", -22210, N, "ungefördert (CVB 3.077 €)", "unfunded (CVB €3,077)"],
+    ["Opera Edition", "11/25", -19155, N, "ungefördert", "unfunded"],
+    ["Britten in Peace", "02/26", -14457, P, "Orchester vom Konzerthaus gestellt", "orchestra provided by the Konzerthaus"],
+    ["Tristia / Ode", "10/26", -4502, P, "HKF-Förderung 23.000 €", "HKF funding €23,000"],
+    ["g", ["Freiwillig", "kein Pflichtkonzert · zusammen +6.151"],
+          ["Voluntary", "not a mandatory concert · total +6,151"]],
+    ["Gerontius", "01/23", 3750, A, "chorsinfonisch ohne Profiorchester, sehr hohe Ticketeinnahmen", "choral-symphonic without professional orchestra, very high ticket revenue"],
+    ["Sieben Worte Tour", "03/24", 1326, A, "a cappella", "a cappella"],
+    ["Mare Balticum", "07/25", 1075, A, "a cappella", "a cappella"],
   ];
   const L = narrow ? 0 : 204, R = W - 30, lo = narrow ? -44000 : -40000, hi = 9000;
   const x = v => L + (v - lo) / (hi - lo) * (R - L);
@@ -313,14 +443,15 @@ function drawProjects() {
   let yy = 4;
   data.forEach((d, i) => {
     if (d[0] === "g") {
+      const [head, note] = en ? d[2] : d[1];
       yy += i ? 14 : 0;
       el("rect", { x: 0, y: yy, width: W, height: 1, fill: "var(--rule)" }, barG);
-      el("text", { x: 0, y: yy + 16, class: "grp" }, barG, d[1]);
-      const n = wrap(barG, 0, yy + 32, d[2], W, "grp2", 15);
+      el("text", { x: 0, y: yy + 16, class: "grp" }, barG, head);
+      const n = wrap(barG, 0, yy + 32, note, W, "grp2", 15);
       yy += 32 + (n - 1) * 15 + 8;
       return;
     }
-    const [name, date, v, col, kind] = d;
+    const [name, date, v, col, kindDe, kindEn] = d;
     let cy;
     if (narrow) {
       const t = el("text", { x: 0, y: yy + 13, class: "lab" }, barG, name + " ");
@@ -334,19 +465,19 @@ function drawProjects() {
     }
     const x0 = Math.min(x(0), x(v)), w = Math.abs(x(v) - x(0));
     const r = el("rect", { x: x0, y: cy - 7, width: Math.max(w, 2), height: 14, rx: 3, fill: col }, barG);
-    tip(r, `${name} (${date}): ${fmt(v)} € · ${kind}`);
+    tip(r, `${name} (${date}): ${eur(v)} · ${en ? kindEn : kindDe}`);
     const vt = el("text", { x: v < 0 ? x(v) - 5 : x(v) + 5, y: cy + 4, "text-anchor": v < 0 ? "end" : "start", class: "val" }, barG, fmt(v));
     const bb = vt.getBBox(); barG.insertBefore(el("rect", { x: bb.x - 2, y: bb.y, width: bb.width + 4, height: bb.height, fill: "var(--panel)" }, barG), vt);
   });
   const T = 0, B = yy;
   for (let t = -40000; t < 0; t += 10000) {
     el("line", { x1: x(t), x2: x(t), y1: T, y2: B, class: "grid" }, gridG);
-    el("text", { x: x(t), y: B + 16, "text-anchor": "middle" }, gridG, (t / 1000).toLocaleString("de-DE").replace("-", "−") + " T");
+    el("text", { x: x(t), y: B + 16, "text-anchor": "middle" }, gridG, (t / 1000).toLocaleString(S.loc).replace("-", "−") + S.k);
   }
   el("line", { x1: x(0), x2: x(0), y1: T, y2: B, class: "zero" }, gridG);
   el("text", { x: x(0), y: B + 16, "text-anchor": "middle" }, gridG, "0");
   el("line", { x1: x(-21931), x2: x(-21931), y1: T, y2: B + 22, stroke: "var(--ink-2)", "stroke-dasharray": "3 3" }, gridG);
-  const avg = el("text", { x: x(-21931), y: B + 36, "text-anchor": "middle", class: "avg" }, svg, "Ø ungefördertes Pflichtkonzert −21.931");
+  const avg = el("text", { x: x(-21931), y: B + 36, "text-anchor": "middle", class: "avg" }, svg, S.avg);
   const tw = avg.getComputedTextLength();
   avg.setAttribute("x", Math.max(tw / 2, Math.min(W - tw / 2, x(-21931))));
   svg.setAttribute("viewBox", `0 0 ${W} ${B + 44}`);
@@ -354,10 +485,22 @@ function drawProjects() {
 }
 
 function drawAll() { drawSeason(); drawProjects(); }
+/* Language switch: remembered per browser, #en in the URL links straight to English. */
+function setLang(l) {
+  lang = l;
+  document.documentElement.lang = l;
+  document.title = L10N[l].title;
+  try { localStorage.setItem("jk-lang", l); } catch (e) {}
+  try { history.replaceState(null, "", l === "en" ? "#en" : location.pathname + location.search); } catch (e) {}
+  drawAll();
+  document.querySelector(`.wrap[lang="${l}"] .lang button[data-lang="${l}"]`).focus();
+}
+document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => { if (b.dataset.lang !== lang) setLang(b.dataset.lang); }));
+document.title = L10N[lang].title;
 drawAll();
 let lastW = 0;
 new ResizeObserver(() => {
-  const w = document.getElementById("season").parentNode.clientWidth + document.getElementById("projects").parentNode.clientWidth;
+  const w = [...document.querySelectorAll(`.wrap[lang="${lang}"] .chart`)].reduce((s, c) => s + c.clientWidth, 0);
   if (w !== lastW) { lastW = w; drawAll(); }
 }).observe(document.body);
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawAll);
