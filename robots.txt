@@ -1,2 +1,4 @@
 User-agent: *
 Disallow: /2026-Ensembleversammlung-Presi.html
+Disallow: /bausteine-projektbeitraege.html
+Disallow: /kassensturz-chor-2023-2026.html
